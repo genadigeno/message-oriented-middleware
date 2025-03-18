@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: publisher-application
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+  jms:
+    pub-sub-domain: true  #Enables topic-based messaging
+
+server:
+  port: 8081
