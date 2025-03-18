@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  activemq:
+    image: rmohr/activemq:latest
+    container_name: activemq
+    restart: always
+    ports:
+      - "61616:61616"  # JMS Port
+      - "8161:8161"    # Web Console
+      - "5672:5672"    # AMQP
+      - "61613:61613"  # STOMP
+      - "1883:1883"    # MQTT
+    environment:
+      - ACTIVEMQ_ADMIN_LOGIN=admin
+      - ACTIVEMQ_ADMIN_PASSWORD=admin
+      - ACTIVEMQ_CONFIG_MINMEMORY=512
+      - ACTIVEMQ_CONFIG_MAXMEMORY=2048
