@@ -6,7 +6,7 @@ import org.apache.activemq.Message;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class DurableSubscriber {
 
     @JmsListener(destination = "sample.topic", containerFactory = "durableFactory", subscription = "durable-subscription")

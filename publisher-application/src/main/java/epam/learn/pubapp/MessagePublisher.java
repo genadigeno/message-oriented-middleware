@@ -4,6 +4,8 @@ import jakarta.jms.*;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Service
 public class MessagePublisher {
     private final JmsTemplate jmsTemplate;
@@ -35,5 +37,11 @@ public class MessagePublisher {
             System.out.println("response received: " + response);
             return response;
         }
+    }
+
+    private final AtomicInteger counter = new AtomicInteger(0);
+    public void sendMessageToVirtual(String message) {
+        jmsTemplate.convertAndSend("VirtualTopic.sample", counter.incrementAndGet()+"-"+message);
+        System.out.println("Message sent: " + message);
     }
 }

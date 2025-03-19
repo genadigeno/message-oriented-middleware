@@ -25,7 +25,6 @@ public class JmsConfig {
         ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(brokerUrl);
         factory.setUserName(brokerUsername);
         factory.setPassword(brokerPassword);
-        factory.setClientID("local-client");
         return factory;
     }
 
@@ -35,24 +34,15 @@ public class JmsConfig {
     }
 
     @Bean
-    public DefaultJmsListenerContainerFactory durableFactory(CachingConnectionFactory cachingConnectionFactory) {
+    public DefaultJmsListenerContainerFactory virtualContainerFactory() {
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-        factory.setConnectionFactory(cachingConnectionFactory);
-        factory.setPubSubDomain(true);
-        factory.setSubscriptionDurable(true);
+        factory.setConnectionFactory(cachingConnectionFactory());
+        factory.setPubSubDomain(false);// Queue-based Virtual Topic
         return factory;
     }
 
     @Bean
-    public DefaultJmsListenerContainerFactory nonDurableFactory(CachingConnectionFactory cachingConnectionFactory) {
-        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-        factory.setConnectionFactory(cachingConnectionFactory);
-        factory.setPubSubDomain(true);
-        return factory;
-    }
-
-    @Bean
-    public JmsTemplate jmsTemplate(CachingConnectionFactory cachingConnectionFactory) {
-        return new JmsTemplate(cachingConnectionFactory);
+    public JmsTemplate jmsTemplate() {
+        return new JmsTemplate(cachingConnectionFactory());
     }
 }

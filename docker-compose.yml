@@ -4,7 +4,7 @@ services:
   activemq:
     image: rmohr/activemq:latest
     container_name: activemq
-    restart: always
+    restart: no
     ports:
       - "61616:61616"  # JMS Port
       - "8161:8161"    # Web Console
@@ -16,3 +16,8 @@ services:
       - ACTIVEMQ_ADMIN_PASSWORD=admin
       - ACTIVEMQ_CONFIG_MINMEMORY=512
       - ACTIVEMQ_CONFIG_MAXMEMORY=2048
+      - ACTIVEMQ_TRANSPORT_CONNECTORS="openwire,tcp://0.0.0.0:61616,stomp,tcp://0.0.0.0:61613,mqtt,tcp://0.0.0.0:1883"
+#      - ACTIVEMQ_VIRTUAL_TOPIC="true"  # Enabling virtual topics
+#      - ACTIVEMQ_VIRTUAL_TOPIC_NAME="VirtualTopic.#"  # Configure the name for virtual topics
+    volumes:
+      - ./activemq-volume:/data

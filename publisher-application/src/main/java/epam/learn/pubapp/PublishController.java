@@ -26,4 +26,10 @@ public class PublishController {
         Object response = publisher.sendRequest(message);
         return "Message sent: " + message + "\nResponse: " + response;
     }
+
+    @GetMapping("/virtual-topic/{message}")
+    public String virtualTopic(@PathVariable String message) {
+        publisher.sendMessageToVirtual(message);
+        return "Message sent: " + message;
+    }
 }
