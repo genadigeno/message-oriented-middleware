@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.connection.CachingConnectionFactory;
+import org.springframework.jms.core.JmsTemplate;
 
 @Configuration
 public class JmsConfig {
@@ -48,5 +49,10 @@ public class JmsConfig {
         factory.setConnectionFactory(cachingConnectionFactory);
         factory.setPubSubDomain(true);
         return factory;
+    }
+
+    @Bean
+    public JmsTemplate jmsTemplate(CachingConnectionFactory cachingConnectionFactory) {
+        return new JmsTemplate(cachingConnectionFactory);
     }
 }
